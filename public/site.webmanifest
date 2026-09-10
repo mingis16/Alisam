@@ -1,0 +1,13 @@
+{
+  "name": "Standard Guest House",
+  "short_name": "Standard GH",
+  "description": "Standard Guest House — College Road, Freetown, Sierra Leone",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#547746",
+  "icons": [
+    { "src": "/icon", "sizes": "64x64", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

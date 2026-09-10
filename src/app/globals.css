@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-brand-950 antialiased;
+  }
+
+  /* WCAG AAA (Rule #13): visible 3px focus ring on every interactive element,
+     never removed with outline:none. */
+  :focus-visible {
+    outline: 3px solid theme('colors.brand.600');
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-900 focus:px-4 focus:py-2 focus:text-white;
+  }
+
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-card transition hover:bg-brand-700 focus-visible:outline-brand-800 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-600 bg-white px-6 py-3 text-sm font-semibold text-brand-700 transition hover:bg-brand-50;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-brand-950;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-brand-200 bg-white px-3.5 py-2.5 text-base text-brand-950 placeholder:text-brand-400 focus-visible:border-brand-500;
+  }
+
+  .field-error {
+    @apply mt-1 text-sm font-medium text-red-700;
+  }
+}

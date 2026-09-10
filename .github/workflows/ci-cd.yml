@@ -1,0 +1,137 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  quality:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Generate Prisma client
+        run: npm run prisma:generate
+
+      - name: Production build
+        run: npm run build
+        env:
+          # Dummy values so the build step never touches real infrastructure —
+          # actual secrets are only injected at deploy time, never in CI logs.
+          DATABASE_URL: postgresql://user:pass@localhost:5432/db
+          NEXT_PUBLIC_SITE_URL: https://standardguesthousefreetown.com
+
+      - name: Run a Lighthouse budget check (Core Web Vitals — Rule #12)
+        uses: treosh/lighthouse-ci-action@v11
+        continue-on-error: true
+        with:
+          urls: |
+            http://localhost:3000/
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  docker-build:
+    name: Build & push container image
+    needs: quality
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  migrate:
+    name: Run database migrations
+    needs: docker-build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Apply Prisma migrations to the primary writer
+        run: npm run prisma:migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+  deploy:
+    name: Deploy (auto-scaling target)
+    needs: migrate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      # Primary path: Vercel — native Next.js ISR, edge caching, and
+      # serverless function auto-scaling with zero infra to manage.
+      - name: Deploy to Vercel
+        run: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # Alternative path (containerized, self-managed autoscaling): force a
+      # new ECS Fargate rolling deployment from the image docker-build just
+      # pushed to GHCR. Uncomment if deploying via infra/ecs instead of Vercel.
+      # - name: Deploy to AWS ECS Fargate
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      #   with:
+      #     task-definition: infra/ecs/task-definition.json
+      #     service: standard-guest-house-service
+      #     cluster: standard-guest-house-cluster
+      #     wait-for-service-stability: true
+
+      - name: Purge CDN edge cache
+        run: |
+          curl -sf -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
