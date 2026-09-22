@@ -1,7 +1,9 @@
 import { AIRPORT_DISTANCE_NOTE, BUSINESS_NAME, FULL_ADDRESS, GOOGLE_MAPS_LINK, LOCATION_NAME } from '@/lib/business';
 
+// `||` (not `??`): an env var set to an empty string must also fall back,
+// or the map iframe gets src="" and renders blank.
 const MAPS_EMBED_SRC =
-  process.env.NEXT_PUBLIC_MAPS_EMBED_SRC ??
+  process.env.NEXT_PUBLIC_MAPS_EMBED_SRC ||
   'https://www.google.com/maps?q=Rotifunk,+Lungi,+Sierra+Leone&output=embed';
 
 export function MapEmbed() {

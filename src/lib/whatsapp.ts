@@ -1,7 +1,11 @@
 // WhatsApp click-to-chat helpers. All "Book" CTAs across the site route
 // through here so the prefilled message stays consistent everywhere.
 
-export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '23276726597';
+// `||` (not `??`) on purpose: an env var set to an empty string on the
+// hosting platform must also fall back to the default — otherwise every
+// wa.me link loses its phone number and WhatsApp shows a "forward
+// message" picker instead of opening a chat with this business.
+export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '23276726597';
 export const WHATSAPP_DISPLAY_NUMBER = '+232 76 726597';
 
 export function buildWhatsAppLink(message: string) {
