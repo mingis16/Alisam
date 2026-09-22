@@ -80,9 +80,9 @@ const nextConfig = {
       // received the redirect target URL as the "image" body instead of
       // actual pixel data).
       {
-        source: '/((?!_next/|images/).*)',
+        source: '/:path((?!_next/|images/).*)',
         has: [{ type: 'header', key: 'x-forwarded-proto', value: 'http' }],
-        destination: `${siteUrl}/:path*`,
+        destination: `${siteUrl}/:path`,
         permanent: true,
       },
     ];
