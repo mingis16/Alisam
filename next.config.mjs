@@ -68,7 +68,8 @@ const nextConfig = {
   },
 
   async redirects() {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alisamguesthouse.com';
+    // `||` (not `??`) so an env var set to an empty string also falls back.
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://alisamguesthouse.com';
     return [
       // Belt-and-suspenders HTTP->HTTPS redirect; the CDN/load balancer also
       // terminates TLS and refuses plaintext origin traffic.

@@ -3,7 +3,10 @@ import { BUSINESS_NAME, FULL_ADDRESS, NIGHTLY_RATE_SLE, TOTAL_ROOMS } from './bu
 import { WHATSAPP_DISPLAY_NUMBER } from './whatsapp';
 
 export const SITE_NAME = BUSINESS_NAME;
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alisamguesthouse.com';
+// `||` (not `??`) on purpose: an env var set to an empty string on the
+// hosting platform must also fall back to the default, or `new URL(SITE_URL)`
+// in layout.tsx throws ERR_INVALID_URL at build time.
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://alisamguesthouse.com';
 export const SITE_DESCRIPTION =
   `${BUSINESS_NAME} in Rotifunk, Lungi — a comfortable, secure ${TOTAL_ROOMS}-room guest house just 5–7 miles from ` +
   `Freetown International Airport. Air-conditioned rooms with workspace and en-suite bathrooms, secure on-site ` +
