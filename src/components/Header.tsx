@@ -4,16 +4,18 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import { WhatsAppButton } from './WhatsAppButton';
+import { defaultInquiryMessage, buildWhatsAppLink } from '@/lib/whatsapp';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
-  { href: '/rooms', label: 'Rooms & Suites' },
-  { href: '/booking', label: 'Book Now' },
+  { href: '/rooms', label: 'Rooms' },
+  { href: '/booking', label: 'Check Availability' },
   { href: '/contact', label: 'Contact & Location' },
 ];
 
-// Rule #14 (mobile-first nav + collapsible drawer) and Rule #20 (one
-// persistent, unmissable CTA in the header on every breakpoint).
+// Mobile-first nav with a collapsible drawer, and a persistent, unmissable
+// WhatsApp CTA in the header on every breakpoint.
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -33,10 +35,10 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-brand-100 bg-white/95 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between sm:h-20">
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-semibold text-brand-900 sm:text-xl">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-600 text-white" aria-hidden="true">
-            SG
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sand-500 text-brand-950" aria-hidden="true">
+            AG
           </span>
-          Standard Guest House
+          Alisam Guest House
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -56,9 +58,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/booking" className="btn-primary hidden sm:inline-flex">
-            Check Availability
-          </Link>
+          <WhatsAppButton message={defaultInquiryMessage()} className="btn-primary hidden sm:inline-flex">
+            Book via WhatsApp
+          </WhatsAppButton>
           <button
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-brand-200 text-brand-900 md:hidden"
@@ -101,8 +103,13 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <a href="tel:+23276000000" className="mt-4 rounded-lg border border-brand-200 px-4 py-4 text-center text-lg font-semibold text-brand-800">
-            Call +232 76 000 000
+          <a
+            href={buildWhatsAppLink(defaultInquiryMessage())}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 rounded-lg border border-brand-200 px-4 py-4 text-center text-lg font-semibold text-brand-800"
+          >
+            Chat on WhatsApp
           </a>
         </nav>
       </div>

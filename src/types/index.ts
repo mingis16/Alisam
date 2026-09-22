@@ -1,14 +1,8 @@
-export interface RoomTypeSummary {
+export interface GalleryImage {
   id: string;
-  slug: string;
-  name: string;
-  description: string;
-  basePriceUsd: number;
-  basePriceSll: number;
-  maxGuests: number;
-  totalUnits: number;
-  amenities: string[];
-  images: string[];
+  src: string;
+  alt: string;
+  caption: string;
 }
 
 export interface Review {

@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
 import { ContactForm } from '@/components/ContactForm';
 import { MapEmbed } from '@/components/MapEmbed';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { buildMetadata } from '@/lib/seo';
+import { AIRPORT_DISTANCE_NOTE, FULL_ADDRESS } from '@/lib/business';
+import { WHATSAPP_DISPLAY_NUMBER, defaultInquiryMessage } from '@/lib/whatsapp';
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: 'Contact & Location',
-  description:
-    'Contact Standard Guest House on College Road, Freetown, Sierra Leone. Call, email, or send a message — plus directions and an interactive map.',
+  description: `Contact Alisam Guest House in Rotifunk, Lungi, Sierra Leone via WhatsApp — plus directions and an interactive map. ${AIRPORT_DISTANCE_NOTE}.`,
   path: '/contact',
 });
 
@@ -18,7 +20,7 @@ export default function ContactPage() {
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="font-display text-4xl font-bold text-brand-950">Contact &amp; Location</h1>
         <p className="mt-4 text-brand-700">
-          We&apos;re on College Road, Freetown — reach out any time or drop by directly.
+          We&apos;re in {FULL_ADDRESS} — {AIRPORT_DISTANCE_NOTE.toLowerCase()}. Reach out any time on WhatsApp.
         </p>
       </div>
 
@@ -28,24 +30,17 @@ export default function ContactPage() {
 
           <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-xl2 border border-brand-100 p-5">
-              <dt className="text-sm font-semibold text-brand-500">Phone</dt>
+              <dt className="text-sm font-semibold text-brand-500">WhatsApp</dt>
               <dd className="mt-1">
-                <a href="tel:+23276000000" className="text-lg font-semibold text-brand-900 hover:underline">
-                  +232 76 000 000
-                </a>
-              </dd>
-            </div>
-            <div className="rounded-xl2 border border-brand-100 p-5">
-              <dt className="text-sm font-semibold text-brand-500">Email</dt>
-              <dd className="mt-1">
-                <a href="mailto:reservations@standardguesthousefreetown.com" className="text-lg font-semibold text-brand-900 hover:underline">
-                  reservations@standardguesthousefreetown.com
-                </a>
+                <WhatsAppButton message={defaultInquiryMessage()} className="btn-primary">
+                  {WHATSAPP_DISPLAY_NUMBER}
+                </WhatsAppButton>
               </dd>
             </div>
             <div className="rounded-xl2 border border-brand-100 p-5 sm:col-span-2">
               <dt className="text-sm font-semibold text-brand-500">Address</dt>
-              <dd className="mt-1 text-lg font-semibold text-brand-900">College Road, Freetown, Sierra Leone</dd>
+              <dd className="mt-1 text-lg font-semibold text-brand-900">{FULL_ADDRESS}</dd>
+              <dd className="mt-1 text-sm text-brand-600">{AIRPORT_DISTANCE_NOTE}</dd>
             </div>
           </dl>
         </div>

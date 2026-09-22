@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
+import { BUSINESS_NAME, FULL_ADDRESS, NIGHTLY_RATE_SLE, TOTAL_ROOMS } from './business';
+import { WHATSAPP_DISPLAY_NUMBER } from './whatsapp';
 
-export const SITE_NAME = 'Standard Guest House';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://standardguesthousefreetown.com';
+export const SITE_NAME = BUSINESS_NAME;
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alisamguesthouse.com';
 export const SITE_DESCRIPTION =
-  'Standard Guest House on College Road, Freetown, Sierra Leone — air-conditioned en-suite rooms with mosquito netting, work desks, and wall-mounted TVs. Book direct for the best rate.';
+  `${BUSINESS_NAME} in Rotifunk, Lungi — a comfortable, secure ${TOTAL_ROOMS}-room guest house just 5–7 miles from ` +
+  `Freetown International Airport. Air-conditioned rooms with workspace and en-suite bathrooms, secure on-site ` +
+  `parking, and 24/7 security. From SLE ${NIGHTLY_RATE_SLE}/night. Book direct via WhatsApp.`;
 
 interface BuildMetadataArgs {
   title: string;
@@ -13,8 +17,8 @@ interface BuildMetadataArgs {
   noIndex?: boolean;
 }
 
-// Centralized metadata builder (Rule #6 + Rule #7): every page gets a
-// consistent title template, canonical URL, and Open Graph / Twitter image.
+// Centralized metadata builder: every page gets a consistent title
+// template, canonical URL, and Open Graph / Twitter image.
 export function buildMetadata({ title, description, path = '', image, noIndex }: BuildMetadataArgs): Metadata {
   const url = `${SITE_URL}${path}`;
   const desc = description ?? SITE_DESCRIPTION;
@@ -30,7 +34,7 @@ export function buildMetadata({ title, description, path = '', image, noIndex }:
       description: desc,
       url,
       siteName: SITE_NAME,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: `${SITE_NAME} — College Road, Freetown` }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `${SITE_NAME} — Rotifunk, Lungi` }],
       locale: 'en_US',
       type: 'website',
     },
@@ -44,6 +48,9 @@ export function buildMetadata({ title, description, path = '', image, noIndex }:
 }
 
 // JSON-LD structured data for the LodgingBusiness (rich search results / maps).
+// Note: precise GPS coordinates for Rotifunk, Lungi are intentionally omitted
+// here rather than guessed — the Google Maps link elsewhere on the site is
+// the authoritative location pointer until verified coordinates are supplied.
 export function lodgingBusinessJsonLd() {
   return {
     '@context': 'https://schema.org',
@@ -51,27 +58,24 @@ export function lodgingBusinessJsonLd() {
     name: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    telephone: '+232-76-000-000',
-    priceRange: '$$',
+    telephone: WHATSAPP_DISPLAY_NUMBER,
+    priceRange: `SLE ${NIGHTLY_RATE_SLE} per night`,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'College Road',
-      addressLocality: 'Freetown',
+      streetAddress: 'Rotifunk',
+      addressLocality: 'Lungi',
       addressCountry: 'SL',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 8.4844,
-      longitude: -13.2344,
     },
     amenityFeature: [
       'Air Conditioning',
-      'Free Wi-Fi',
-      'Mosquito Netting',
+      'Dedicated Workspace',
       'En-suite Bathrooms',
-      'Work Desks',
-      'Wall-Mounted TVs',
-      'Shared Lounge',
+      'Secure On-Site Parking',
+      '24/7 Security',
+      'Guest Lounge',
+      'Airport Transit Convenience',
     ].map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
   };
 }
+
+export { FULL_ADDRESS };

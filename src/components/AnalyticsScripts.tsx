@@ -16,8 +16,8 @@ export function AnalyticsScripts() {
   useEffect(() => {
     setConsented(getStoredConsent() === 'accepted');
     const onChange = (e: Event) => setConsented((e as CustomEvent).detail === 'accepted');
-    window.addEventListener('sgh:consent-changed', onChange);
-    return () => window.removeEventListener('sgh:consent-changed', onChange);
+    window.addEventListener('agh:consent-changed', onChange);
+    return () => window.removeEventListener('agh:consent-changed', onChange);
   }, []);
 
   return (

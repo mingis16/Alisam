@@ -1,12 +1,9 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-// Edge middleware — runs before the Node.js API routes, on every request,
-// at each CDN edge location. Deliberately lightweight: heavy rate-limiting
-// and validation live in the API routes (Node runtime, backed by the Redis
-// cluster) since ioredis needs a TCP socket the Edge Runtime doesn't allow.
-// This layer only does cheap, stateless checks that belong as close to the
-// edge as possible — the WAF/CDN (Cloudflare) handles volumetric DDoS
-// mitigation and IP reputation upstream of this entirely.
+// Edge middleware — runs before every request, at each CDN edge location.
+// Deliberately lightweight: this site has no backend API routes that write
+// data, so this layer only does cheap, stateless checks (HTTPS enforcement,
+// basic bot UA blocking) that belong as close to the edge as possible.
 
 const BLOCKED_UA_PATTERNS = [/curl\/7\.0/i, /^$/, /sqlmap/i, /nikto/i];
 

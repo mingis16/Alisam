@@ -7,7 +7,7 @@ export const REVIEWS: Review[] = [
     country: 'Sierra Leone',
     rating: 5,
     comment:
-      'Very clean rooms and the air conditioning worked perfectly all night. The front desk staff helped arrange transport from the airport without any hassle.',
+      'Very clean rooms and the air conditioning worked perfectly all night. Being so close to Lungi Airport made my early flight completely stress-free.',
     stayDate: '2026-06-14',
   },
   {
@@ -16,7 +16,7 @@ export const REVIEWS: Review[] = [
     country: 'United Kingdom',
     rating: 5,
     comment:
-      'Great value on College Road — walking distance to everything I needed for work. The desk and reliable Wi-Fi meant I could get my calls done between meetings.',
+      'Great value stay near the airport — secure parking gave me peace of mind, and the desk in my room meant I could get work done between calls.',
     stayDate: '2026-05-02',
   },
   {
@@ -25,7 +25,7 @@ export const REVIEWS: Review[] = [
     country: 'Sierra Leone',
     rating: 4,
     comment:
-      'The mosquito netting and en-suite bathroom made a big difference for a comfortable stay. Would book again for family visits to Freetown.',
+      'Quiet surroundings and 24/7 security made this a comfortable place to stay with family before our flight. Would book again.',
     stayDate: '2026-04-21',
   },
   {
@@ -34,7 +34,7 @@ export const REVIEWS: Review[] = [
     country: 'Italy',
     rating: 5,
     comment:
-      'Loved the shared lounge — a relaxed spot to meet other guests in the evening. Booking through the website was quick and the confirmation was instant.',
+      'Booking through WhatsApp was quick and easy, and the guest lounge was a relaxed spot to wait before our transfer to the airport.',
     stayDate: '2026-03-09',
   },
 ];

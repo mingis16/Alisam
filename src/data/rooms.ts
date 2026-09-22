@@ -1,64 +1,60 @@
-import type { RoomTypeSummary } from '@/types';
+import type { GalleryImage } from '@/types';
 
-// Static marketing content mirrors prisma/seed.ts. Kept as a standalone
-// module (rather than a DB call) so Home/Rooms pages can be fully
-// pre-rendered at build time (SSG) and served from the CDN edge with zero
-// database round-trips; only live price/availability checks hit the API.
-export const ROOM_TYPES: RoomTypeSummary[] = [
+// Real photos of the property, supplied by the owner.
+export const ROOM_GALLERY: GalleryImage[] = [
   {
-    id: 'standard-single',
-    slug: 'standard-single',
-    name: 'Standard Single Room',
-    description:
-      'A cozy air-conditioned single room with a fitted wardrobe, work desk, wall-mounted TV, and private en-suite bathroom — ideal for solo business or leisure travelers on College Road.',
-    basePriceUsd: 35,
-    basePriceSll: 700,
-    maxGuests: 1,
-    totalUnits: 6,
-    amenities: ['Air Conditioning', 'Mosquito Netting', 'Wardrobe', 'Work Desk', 'Wall-Mounted TV', 'En-suite Bathroom'],
-    images: ['/images/rooms/standard-single-1.svg', '/images/rooms/standard-single-2.svg'],
+    id: 'room-interior-1',
+    src: '/images/rooms/room-interior-1.jpg',
+    alt: 'Alisam Guest House room with bed, wardrobe, desk, and wall-mounted air conditioning',
+    caption: 'Room interior',
   },
   {
-    id: 'standard-double',
-    slug: 'standard-double',
-    name: 'Standard Double Room',
-    description:
-      'Spacious double room featuring a plush bed, mosquito netting, tiled flooring, ambient drapery, and a dedicated workspace — comfortable for couples or business stays.',
-    basePriceUsd: 48,
-    basePriceSll: 960,
-    maxGuests: 2,
-    totalUnits: 8,
-    amenities: ['Air Conditioning', 'Mosquito Netting', 'Wardrobe', 'Work Desk', 'Wall-Mounted TV', 'En-suite Bathroom', 'Tile Flooring'],
-    images: ['/images/rooms/standard-double-1.svg', '/images/rooms/standard-double-2.svg'],
+    id: 'room-interior-2',
+    src: '/images/rooms/room-interior-2.jpg',
+    alt: 'Alisam Guest House room interior, alternate angle',
+    caption: 'Room interior',
   },
   {
-    id: 'deluxe-ensuite',
-    slug: 'deluxe-ensuite',
-    name: 'Deluxe En-suite Room',
-    description:
-      'Our premium room class with upgraded furnishings, a larger work desk and chair setup, wall-mounted TV, ambient drapery, and a fully tiled private bathroom.',
-    basePriceUsd: 65,
-    basePriceSll: 1300,
-    maxGuests: 2,
-    totalUnits: 4,
-    amenities: ['Air Conditioning', 'Mosquito Netting', 'Fitted Wardrobe', 'Work Desk & Chair', 'Wall-Mounted TV', 'En-suite Bathroom', 'Tile Flooring', 'Drapery'],
-    images: ['/images/rooms/deluxe-ensuite-1.svg', '/images/rooms/deluxe-ensuite-2.svg'],
+    id: 'air-conditioning',
+    src: '/images/rooms/air-conditioning.jpg',
+    alt: 'Wall-mounted air conditioning unit fitted in every Alisam Guest House room',
+    caption: 'Air conditioning',
   },
   {
-    id: 'family-room',
-    slug: 'family-room',
-    name: 'Family Room',
-    description:
-      'A generously sized room for families or small groups, with multiple beds, air conditioning, mosquito netting, and shared access to the lounge and reception area.',
-    basePriceUsd: 80,
-    basePriceSll: 1600,
-    maxGuests: 4,
-    totalUnits: 3,
-    amenities: ['Air Conditioning', 'Mosquito Netting', 'Wardrobe', 'Work Desk', 'Wall-Mounted TV', 'En-suite Bathroom'],
-    images: ['/images/rooms/family-room-1.svg', '/images/rooms/family-room-2.svg'],
+    id: 'bedding',
+    src: '/images/rooms/bedding.jpg',
+    alt: 'Made-up bed with mosquito net canopy at Alisam Guest House',
+    caption: 'Comfortable bedding',
+  },
+  {
+    id: 'work-desk',
+    src: '/images/rooms/work-desk.jpg',
+    alt: 'In-room work desk and TV at Alisam Guest House',
+    caption: 'Work desk',
+  },
+  {
+    id: 'guest-lounge',
+    src: '/images/rooms/guest-lounge.jpg',
+    alt: 'Shared guest lounge area at Alisam Guest House',
+    caption: 'Guest lounge area',
+  },
+  {
+    id: 'guest-veranda',
+    src: '/images/rooms/guest-veranda.jpg',
+    alt: 'Covered veranda seating area at Alisam Guest House',
+    caption: 'Covered veranda seating',
+  },
+  {
+    id: 'guest-dining-bar',
+    src: '/images/rooms/guest-dining-bar.jpg',
+    alt: 'Guest dining and bar area at Alisam Guest House',
+    caption: 'On-site bar & dining area',
   },
 ];
 
-export function getRoomTypeBySlug(slug: string) {
-  return ROOM_TYPES.find((r) => r.slug === slug);
-}
+export const ROOM_FEATURES = [
+  'Air Conditioning',
+  'Dedicated Workspace',
+  'En-suite Bathroom',
+  'Mosquito Netting',
+];

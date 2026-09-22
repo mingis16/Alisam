@@ -8,16 +8,11 @@ function futureDate(daysFromNow: number) {
 }
 
 const validBooking = {
-  roomTypeId: 'standard-single',
   checkIn: futureDate(1),
   checkOut: futureDate(3),
   guests: 2,
   fullName: 'Aminata Kamara',
-  email: 'aminata@example.com',
-  phone: '+232 76 000 000',
-  paymentMethod: 'ORANGE_MONEY' as const,
-  website: '',
-  turnstileToken: 'test-token',
+  phone: '+232 76 726597',
 };
 
 describe('bookingSchema', () => {
@@ -35,13 +30,8 @@ describe('bookingSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('rejects a filled honeypot field as spam', () => {
-    const result = bookingSchema.safeParse({ ...validBooking, website: 'http://spam.example' });
-    expect(result.success).toBe(false);
-  });
-
-  it('rejects an invalid email', () => {
-    const result = bookingSchema.safeParse({ ...validBooking, email: 'not-an-email' });
+  it('rejects an invalid phone number', () => {
+    const result = bookingSchema.safeParse({ ...validBooking, phone: 'not-a-phone!' });
     expect(result.success).toBe(false);
   });
 
@@ -54,11 +44,8 @@ describe('bookingSchema', () => {
 describe('contactSchema', () => {
   const validContact = {
     name: 'David Okafor',
-    email: 'david@example.com',
     subject: 'Question about parking',
     message: 'Is there secure parking available on site for the duration of my stay?',
-    website: '',
-    turnstileToken: 'test-token',
   };
 
   it('accepts a valid contact payload', () => {
@@ -70,8 +57,8 @@ describe('contactSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('rejects a filled honeypot field', () => {
-    const result = contactSchema.safeParse({ ...validContact, website: 'bot' });
+  it('rejects a missing name', () => {
+    const result = contactSchema.safeParse({ ...validContact, name: 'A' });
     expect(result.success).toBe(false);
   });
 });

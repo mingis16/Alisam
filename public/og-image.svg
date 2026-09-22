@@ -13,9 +13,9 @@
   <rect x="80" y="80" width="72" height="72" rx="16" fill="#f4f7f3"/>
   <path d="M100 130 L116 100 L132 130 Z" fill="#547746"/>
   <rect x="108" y="130" width="16" height="16" fill="#547746"/>
-  <text x="80" y="260" font-family="Georgia, serif" font-size="64" fill="#ffffff" font-weight="bold">Standard Guest House</text>
-  <text x="80" y="320" font-family="Georgia, serif" font-size="34" fill="#e2ebde">College Road, Freetown, Sierra Leone</text>
-  <text x="80" y="400" font-family="Arial, sans-serif" font-size="26" fill="#c3d6bb">Air Conditioning · En-suite Rooms · Free Wi-Fi · Book Direct</text>
-  <rect x="80" y="450" width="220" height="64" rx="32" fill="#f4f7f3"/>
-  <text x="190" y="490" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#22301d" font-weight="bold">Book Now</text>
+  <text x="80" y="260" font-family="Georgia, serif" font-size="60" fill="#ffffff" font-weight="bold">Alisam Guest House</text>
+  <text x="80" y="320" font-family="Georgia, serif" font-size="34" fill="#e2ebde">Rotifunk, Lungi, Sierra Leone</text>
+  <text x="80" y="400" font-family="Arial, sans-serif" font-size="26" fill="#c3d6bb">5–7 miles from Lungi Airport · Secure Parking · 24/7 Security</text>
+  <rect x="80" y="450" width="260" height="64" rx="32" fill="#f4f7f3"/>
+  <text x="210" y="490" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#22301d" font-weight="bold">Book via WhatsApp</text>
 </svg>

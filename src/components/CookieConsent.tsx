@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { CookieConsentValue } from '@/types';
 
-const STORAGE_KEY = 'sgh-cookie-consent';
-export const COOKIE_CONSENT_EVENT = 'sgh:open-cookie-settings';
+const STORAGE_KEY = 'agh-cookie-consent';
+export const COOKIE_CONSENT_EVENT = 'agh:open-cookie-settings';
 
 export function getStoredConsent(): CookieConsentValue | null {
   if (typeof window === 'undefined') return null;
@@ -30,7 +30,7 @@ export function CookieConsent() {
 
   function choose(value: CookieConsentValue) {
     window.localStorage.setItem(STORAGE_KEY, value);
-    window.dispatchEvent(new CustomEvent('sgh:consent-changed', { detail: value }));
+    window.dispatchEvent(new CustomEvent('agh:consent-changed', { detail: value }));
     setVisible(false);
   }
 
